@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+
+  <head>
+    <script src="jquery-1.11.0.min.js"></script>
+    <script>
+    $(function(){
+      $("#inventoryButton").click(function(){
+        var divClass = $("#inventoryButton").attr("class");
+	if(divClass == 'open'){
+          $("#mainBody").animate({left:'0%'});
+          $("#inventoryButton").attr('class','close');
+        }
+        else{
+          $("#mainBody").animate({left:'-80%'});
+          $("#inventoryButton").attr('class','open');
+        }
+      });
+     });
+    </script>
+    <style>
+      #mainBody
+      {
+       height:100%;
+       width:180%;
+       position:fixed;
+       top:0px;
+       left:-80%;
+       background-color:red;
+      }
+      #inventory
+      {
+       background-color:blue;
+       width:56%;
+       height:100%;
+       position:absolute;
+       left:0px;
+       top:0px;
+      }
+      #inventoryButton
+      {
+       width:15%;
+       height:10%;
+       position:absolute;
+       right: 3%;
+       bottom: 5%;
+      }
+      #rightHalf
+      {
+       background-color:green;
+       width:44%;
+       height:100%;
+       position:absolute;
+       left:56%;
+       top:0px;
+      }
+      #headerBar
+      {
+       background-color:grey;
+       width:100%;
+       height:10%;
+       position:absolute;
+       left:0px;
+       top:0px;
+      }
+      #middleSection
+      {
+       width:75%;
+       height:90%;
+       position:absolute;
+       left:0px;
+       top:10%;
+      }
+      #textEditor
+      {
+       background-color:white;
+       width:100%;
+       height:88%;
+       position:absolute;
+       left:0px;
+       top:0px;
+      }
+      #break
+      {
+       background-color:grey;
+       width:100%;
+       height:12%;
+       position:absolute;
+       left:0px;
+       top:88%;
+      }
+      #notifications
+      {
+       background-color:pink;
+       width:25%;
+       height:90%;
+       position:absolute;
+       left:75%;
+       top:10%;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="mainBody" id="mainBody">
+      <div class="inventory" id="inventory">
+        <p>Inventory thing</p>
+        <button class="open" id="inventoryButton" type="button">Open Inventory</button>
+      </div>
+      <div class="rightHalf" id="rightHalf">
+        <div class="headerBar" id="headerBar">
+        </div>
+        <div class="middleSection" id="middleSection">
+          <div class="textEditor" id="textEditor"></div>
+          <div class="break" id="break">BREAK</div>
+        </div>
+        <div class="notifications" id="notifications"></div>
+
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
