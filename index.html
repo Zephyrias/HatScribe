@@ -45,6 +45,15 @@
        right: 3%;
        bottom: 5%;
       }
+      #AvatarStats
+      {
+       width:15%;
+       height:10%;
+       position:absolute;
+       right: 3%;
+       top: 5%;
+       text-align: center;
+      }
       #rightHalf
       {
        background-color:green;
@@ -98,6 +107,15 @@
        left:75%;
        top:10%;
       }
+      #textEditorTextArea
+      {
+        display: block;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        height: 100%;
+      }
     </style>
 
   </head>
@@ -107,12 +125,17 @@
       <div class="inventory" id="inventory">
         <p>Inventory thing</p>
         <button class="open" id="inventoryButton" type="button">Open Inventory</button>
+        <div id="AvatarStats">Mark Stackerman<br/>
+          Level 17<br/>
+          342/500 XP</div>
       </div>
       <div class="rightHalf" id="rightHalf">
         <div class="headerBar" id="headerBar">
         </div>
         <div class="middleSection" id="middleSection">
-          <div class="textEditor" id="textEditor"></div>
+          <div class="textEditor" id="textEditor">
+            <textarea id="textEditorTextArea">Default text</textarea>
+          </div>
           <div class="break" id="break">BREAK</div>
         </div>
         <div class="notifications" id="notifications"></div>
