@@ -24,6 +24,47 @@
   </head>
   <body>
 
+    <div id="settingsModal" class="modalDialog">
+      <div>
+        <form>
+          Document Title: <input type="text" name="docName"><br><br>
+          Font:
+          <select name="font">
+            <option value="Arial">Arial</option>
+            <option value="Comic Sans">Comic Sans</option>
+            <option value="Times New Roman">Times New Roman</option>
+          </select><br><br>
+          Font Color:
+          <select name="color">
+            <option value="Black">Black</option>
+            <option value="Blue" style="color:blue">Blue</option>
+            <option value="Green" style="color:green">Green</option>
+            <option value="Red" style="color:red">Red</option>
+          </select><br><br>
+          Font Size:
+          <select name="size">
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12" selected>12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+          </select><br><br>
+          Paper Length: <input type="text" name="lengthNum" maxlength="5" size="5">
+          <select name="lengthType">
+            <option value="Words" selected>Words</option>
+            <option value="Paragraphs">Paragraphs</option>
+            <option value="Pages">Pages</option>
+          </select><br>
+        </form>
+        <br>
+        <a href="#close" class="close" type="button">Save changes</a>
+        <a href="#close" class="close" type="button">Cancel</a>
+      </div>
+    </div>
+
     <div class="mainBody" id="mainBody">
       <div class="inventory" id="inventory">
         <p>Inventory thing</p>
@@ -33,7 +74,9 @@
           342/500 XP</div>
       </div>
       <div class="rightHalf" id="rightHalf">
-        <div class="headerBar" id="headerBar"></div>
+        <div class="headerBar" id="headerBar">
+          <a id="settingsOpen" href="#settingsModal">Settings</a>
+        </div>
         <div class="middleSection" id="middleSection">
           <div class="textEditor" id="textEditor">
             <textarea id="textEditorTextArea">Default text</textarea>
