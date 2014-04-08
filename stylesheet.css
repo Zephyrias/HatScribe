@@ -132,6 +132,6 @@ pointer-events: none;
 #settingsOpen
 {
   position:relative;
-  left:90%;
+  left:50%;
   top:25%;
 }
