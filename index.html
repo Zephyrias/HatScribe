@@ -15,11 +15,13 @@
         var divClass = $("#inventoryButton").attr("class");
 	if(divClass == 'open'){
           $("#mainBody").animate({left:'0%'});
-          $("#inventoryButton").attr('class','close');
+          $("#inventoryButton").attr('class','notOpen');
+          document.getElementById("inventoryButton").innerHTML = 'Close Inventory';
         }
         else{
           $("#mainBody").animate({left:'-80%'});
           $("#inventoryButton").attr('class','open');
+          document.getElementById("inventoryButton").innerHTML = 'Open Inventory';
         }
       });
      });
