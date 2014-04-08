@@ -4,6 +4,15 @@
   <head>
     <script src="jquery-1.11.0.min.js"></script>
     <script>
+    $(document).ready(function(){
+      window.location = '#startModal';
+      window.title = "Hat Scribe";
+    });
+
+    function closeModal(){
+      window.location = '#close';
+    }
+
     $(function(){
       $("#inventoryButton").click(function(){
         var divClass = $("#inventoryButton").attr("class");
@@ -33,18 +42,78 @@
         $('#counts').html('Word Count: ' + wordCount + '<br />Paragraph Count: ' + paragraphCount);
       });
     });
+
+    function setUp(form){
+      console.log("Document Title: " + form.docName.value);
+      console.log("Font Type: " + form.font.value);
+      console.log("Font Color: " + form.color.value);
+      console.log("Font Size: " + form.size.value);
+      console.log("Paper Length Goal: " + form.lengthNum.value + " " + form.lengthType.value);
+
+      var textDoc = document.getElementById("textEditorTextArea");
+      var settingsForm = document.getElementById("settings");
+      if (form.docName.value != null)
+      {
+        document.getElementById("documentTitle").innerHTML = form.docName.value;
+        $(settingsForm.docName).val(form.docName.value);
+      }
+
+      if (form.font.value != null)
+      {
+        $(textDoc).css("font-family", form.font.value);
+        $(settingsForm.font).val(form.font.value);
+      }
+
+      if (form.color.value != null)
+      {
+        $(textDoc).css("color", form.color.value);
+        $(settingsForm.color).val(form.color.value);
+      }
+
+      if (form.size.value!= null)
+      {
+        $(textDoc).css("font-size", form.size.value + "px");
+        $(settingsForm.size).val(form.size.value);
+      }
+
+
+      closeModal();
+      return false;
+    }
+
+    function changeSettings(form){
+      document.getElementById("documentTitle").innerHTML = form.docName.value;
+      var textDoc = document.getElementById("textEditorTextArea");
+      if (form.font.value != null)
+      {
+        $(textDoc).css("font-family", form.font.value);
+      }
+
+      if (form.color.value != null)
+      {
+        $(textDoc).css("color", form.color.value);
+      }
+
+      if (form.size.value!= null)
+      {
+        $(textDoc).css("font-size", form.size.value + "px");
+      }
+
+      closeModal();
+      return false;
+    }
+
     </script>
 
     <link rel ="stylesheet" type="text/css" href="stylesheet.css">
     
   </head>
   <body>
-
-    <div id="settingsModal" class="modalDialog">
+    <div id="startModal" class="modalDialog">
       <div>
-        <form>
-          Document Title: <input type="text" name="docName"><br><br>
-          Font:
+        <form name="setup" id="setup">
+          Document Title: <input type="text" name="docName" placeholder="Untitled"><br><br>
+          Font Type:
           <select name="font">
             <option value="Arial">Arial</option>
             <option value="Comic Sans">Comic Sans</option>
@@ -67,17 +136,62 @@
             <option value="13">13</option>
             <option value="14">14</option>
             <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>  
           </select><br><br>
-          Paper Length: <input type="text" name="lengthNum" maxlength="5" size="5">
+          Paper Length Goal: <input type="text" name="lengthNum" maxlength="5" size="5">
           <select name="lengthType">
             <option value="Words" selected>Words</option>
             <option value="Paragraphs">Paragraphs</option>
             <option value="Pages">Pages</option>
-          </select><br>
+          </select><br><br>
+          <input type="button" value="Create New Document" onClick="setUp(this.form)"></input>
+          <input type="button" value="Load Existing" onClick="closeModal()"></input>
         </form>
         <br>
-        <a href="#close" class="close" type="button">Save changes</a>
-        <a href="#close" class="close" type="button">Cancel</a>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="modalDialog">
+      <div>
+        <form name="settings" id="settings">
+          Document Title: <input type="text" name="docName"><br><br>
+          Font Type:
+          <select name="font">
+            <option value="Arial">Arial</option>
+            <option value="Comic Sans">Comic Sans</option>
+            <option value="Times New Roman">Times New Roman</option>
+          </select><br><br>
+          Font Color:
+          <select name="color">
+            <option value="Black">Black</option>
+            <option value="Blue" style="color:blue">Blue</option>
+            <option value="Green" style="color:green">Green</option>
+            <option value="Red" style="color:red">Red</option>
+          </select><br><br>
+          Font Size:
+          <select name="size">
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12" selected>12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>            
+          </select><br><br>
+          <input type="button" value="Save Changes" onClick="changeSettings(this.form)"></input>
+          <input type="button" value="Cancel" onClick="closeModal()"></input>
+        </form>
+        <br>
       </div>
     </div>
 
@@ -101,7 +215,8 @@
         </div>
         <div class="middleSection" id="middleSection">
           <div class="textEditor" id="textEditor">
-            <textarea id="textEditorTextArea">Default text</textarea>
+            <h1 id="documentTitle"></h1>
+            <textarea id="textEditorTextArea" placeholder="Start typing here!"></textarea>
           </div>
           <div class="break" id="break">
             <div id="breakStar"><img src="star.png">x3</div>
