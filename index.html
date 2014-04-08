@@ -4,13 +4,8 @@
   <head>
     <script src="jquery-1.11.0.min.js"></script>
     <script>
-    $(document).ready(function(){
-      window.location = '#startModal';
-      window.title = "Hat Scribe";
-    });
-
-    function closeModal(){
-      window.location = '#close';
+    function redirect(string){
+      window.location = string;
     }
 
     $(function(){
@@ -43,46 +38,22 @@
       });
     });
 
-    function setUp(form){
+    function changeSettings(form){
       console.log("Document Title: " + form.docName.value);
       console.log("Font Type: " + form.font.value);
       console.log("Font Color: " + form.color.value);
       console.log("Font Size: " + form.size.value);
       console.log("Paper Length Goal: " + form.lengthNum.value + " " + form.lengthType.value);
 
-      var textDoc = document.getElementById("textEditorTextArea");
-      var settingsForm = document.getElementById("settings");
-      if (form.docName.value != null)
+      if (form.docName.value != "")
       {
         document.getElementById("documentTitle").innerHTML = form.docName.value;
-        $(settingsForm.docName).val(form.docName.value);
       }
-
-      if (form.font.value != null)
+      else
       {
-        $(textDoc).css("font-family", form.font.value);
-        $(settingsForm.font).val(form.font.value);
+        document.getElementById("documentTitle").innerHTML = "Untitled";
       }
-
-      if (form.color.value != null)
-      {
-        $(textDoc).css("color", form.color.value);
-        $(settingsForm.color).val(form.color.value);
-      }
-
-      if (form.size.value!= null)
-      {
-        $(textDoc).css("font-size", form.size.value + "px");
-        $(settingsForm.size).val(form.size.value);
-      }
-
-
-      closeModal();
-      return false;
-    }
-
-    function changeSettings(form){
-      document.getElementById("documentTitle").innerHTML = form.docName.value;
+      
       var textDoc = document.getElementById("textEditorTextArea");
       if (form.font.value != null)
       {
@@ -99,10 +70,33 @@
         $(textDoc).css("font-size", form.size.value + "px");
       }
 
-      closeModal();
+      if (!setup)
+      {
+        setup = true;
+        var init = document.getElementById("initButton");
+        $(init).attr("type", "hidden");
+        var change = document.getElementById("changeButton");
+        $(change).attr("type", "button");
+        var cancel = document.getElementById("cancelButton");
+        $(cancel).attr("type", "button");
+      }
+
+      redirect('#close');
       return false;
     }
 
+    function showAbout(){
+      window.location = "#aboutModal";
+      return false;
+    }
+
+    var setup = false;
+
+    $(document).ready(function(){
+      redirect('#startModal');
+      window.title = "Hat Scribe";
+      var setup = false;
+    });
     </script>
 
     <link rel ="stylesheet" type="text/css" href="stylesheet.css">
@@ -111,54 +105,35 @@
   <body>
     <div id="startModal" class="modalDialog">
       <div>
-        <form name="setup" id="setup">
-          Document Title: <input type="text" name="docName" placeholder="Untitled"><br><br>
-          Font Type:
-          <select name="font">
-            <option value="Arial">Arial</option>
-            <option value="Comic Sans">Comic Sans</option>
-            <option value="Times New Roman">Times New Roman</option>
-          </select><br><br>
-          Font Color:
-          <select name="color">
-            <option value="Black">Black</option>
-            <option value="Blue" style="color:blue">Blue</option>
-            <option value="Green" style="color:green">Green</option>
-            <option value="Red" style="color:red">Red</option>
-          </select><br><br>
-          Font Size:
-          <select name="size">
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12" selected>12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>  
-          </select><br><br>
-          Paper Length Goal: <input type="text" name="lengthNum" maxlength="5" size="5">
-          <select name="lengthType">
-            <option value="Words" selected>Words</option>
-            <option value="Paragraphs">Paragraphs</option>
-            <option value="Pages">Pages</option>
-          </select><br><br>
-          <input type="button" value="Create New Document" onClick="setUp(this.form)"></input>
-          <input type="button" value="Load Existing" onClick="closeModal()"></input>
+        <form name="setup" id="setup" align="center">
+          <h1> Welcome to Hat Scribe </h1>
+          <input type="button" value="Create New Document" onClick="redirect('#settingsModal')"></input>
+          <br>
+          <input type="button" value="Load Existing Document" onClick="redirect('#close')"></input>
+          <br>
+          <input type="button" value="About Hat Scribe" onClick="redirect('#aboutModal')"></input>
+          <br>
         </form>
         <br>
+      </div>
+    </div>
+
+    <div id="aboutModal" class="modalDialog">
+      <div>
+        <h2> About Hat Scribe </h2>
+        <p> Hat Scribe is an interactive drafting tool intended to motivate users to write more by gamifying the writing process. This tool was designed by Team Mad Milliners for EECS 493, the User Interface class at the University of Michigan. <br><br>
+          Our team consists of Vicki Li, Daniel Nees, and John Rabideau (with some initial help from Emily Stearns). All of us are computer science majors at the Engineering School here in Ann Arbor and qualified nerds/geeks.<br><br>
+          If you have any questions, comments, or suggestions, we would love to hear them! Email your feedback to vickili@umich.edu, or let one of us know through any (preferably non-magical) methods otherwise.
+        </p>
+        <input type="button" value="Return" onClick="redirect('#startModal')"></input>
       </div>
     </div>
 
     <div id="settingsModal" class="modalDialog">
       <div>
         <form name="settings" id="settings">
-          Document Title: <input type="text" name="docName"><br><br>
+          <h2> Document Settings </h2>
+          Document Title: <input type="text" name="docName" placeholder="Untitled"><br><br>
           Font Type:
           <select name="font">
             <option value="Arial">Arial</option>
@@ -188,8 +163,15 @@
             <option value="19">19</option>
             <option value="20">20</option>            
           </select><br><br>
-          <input type="button" value="Save Changes" onClick="changeSettings(this.form)"></input>
-          <input type="button" value="Cancel" onClick="closeModal()"></input>
+          Paper Length Goal: <input type="text" name="lengthNum" maxlength="5" size="5">
+          <select name="lengthType">
+            <option value="Words" selected>Words</option>
+            <option value="Paragraphs">Paragraphs</option>
+            <option value="Pages">Pages</option>
+          </select><br><br>
+          <input id="changeButton" type="hidden" value="Save Changes" onClick="changeSettings(this.form)"></input>
+          <input id="cancelButton" type="hidden" value="Cancel" onClick="redirect('#close')"></input>
+          <input id="initButton" type="button" value="Create Document" onClick="changeSettings(this.form)"></input>
         </form>
         <br>
       </div>
