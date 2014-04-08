@@ -77,6 +77,12 @@ position:absolute;
 left:0px;
 top:88%;
 }
+#breakStar
+{
+	width: 50%;
+	height: 50%;
+	margin: auto;
+}
 #notifications
 {
 background-color:pink;

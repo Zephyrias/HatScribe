@@ -17,6 +17,22 @@
         }
       });
      });
+
+    $(function(){
+      $('#textEditorTextArea').keyup(function(){
+        var wordCount = 0;
+        var paragraphCount = 0;
+        var startsAndFinishes = $('#'+this.id).val().match(/\b/g);
+        var newlinesWithText = $('#'+this.id).val().match(/(\n.)|(^.)/g);
+        if (startsAndFinishes) {
+          wordCount = startsAndFinishes.length / 2;
+        }
+        if (newlinesWithText) {
+            paragraphCount = newlinesWithText.length;
+          }
+        $('#counts').html('Word Count: ' + wordCount + '<br />Paragraph Count: ' + paragraphCount);
+      });
+    });
     </script>
 
     <link rel ="stylesheet" type="text/css" href="stylesheet.css">
@@ -71,7 +87,9 @@
         <button class="open" id="inventoryButton" type="button">Open Inventory</button>
         <div id="AvatarStats">Mark Stackerman<br/>
           Level 17<br/>
-          342/500 XP</div>
+          342/500 XP<br>
+          <span id="counts">Word Count: <br />Paragraph Count: </span>
+        </div>
       </div>
       <div class="rightHalf" id="rightHalf">
         <div class="headerBar" id="headerBar">
@@ -85,7 +103,9 @@
           <div class="textEditor" id="textEditor">
             <textarea id="textEditorTextArea">Default text</textarea>
           </div>
-          <div class="break" id="break">BREAK</div>
+          <div class="break" id="break">
+            <div id="breakStar"><img src="star.png">x3</div>
+          </div>
         </div>
         <div class="notifications" id="notifications"></div>
 
