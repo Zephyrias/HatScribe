@@ -87,6 +87,14 @@ top:88%;
   left:10px;
   top:10px;
 }
+#breakButton
+{
+  position:absolute;
+  left:30%;
+  top:12.5%;
+  width:40%;
+  height:75%;
+}
 #topRightCorner
 {
 background-color:red;
@@ -154,4 +162,20 @@ pointer-events: none;
   right:10px;
   top:10px;
   z-index: 1;
+}
+
+#closeButton
+{
+  position:relative;
+  left:25%;
+  height:30%;
+  width:50%;
+}
+
+#gambleButton
+{
+  position:relative;
+  left:25%;
+  height:30%;
+  width:50%;
 }

@@ -6,6 +6,8 @@
     <script src="js/bootstrap.min.js"></script>
     
     <script>
+    var numStars = 3;
+
     function redirect(string){
       window.location = string;
     }
@@ -124,6 +126,22 @@
       window.title = "Hat Scribe";
       var setup = false;
     });
+
+    function gamble(){
+      if(numStars == 0){
+       alert('Not enough stars!');
+      }
+      else{
+       numStars = numStars - 1;
+       var tempArray = document.getElementsByName('numStars');
+       for(var i = 0; i < tempArray.length;i++)
+       {
+         tempArray[i].innerHTML = numStars;
+       }
+       alert('You just gambled!');
+      }
+    }
+      
     </script>
 
     <link rel ="stylesheet" type="text/css" href="css/stylesheet.css">
@@ -215,6 +233,16 @@
       </div>
     </div>
 
+    <div id="breakModal" class="modalDialog">
+      <div>
+        Here's where the break stuff goes. NumStars: <span name="numStars">3</span>
+        <br>
+        <input id="gambleButton" type="button" value="Use a Star" onClick="gamble()"></input>
+        <br>
+        <input id="closeButton" type="button" value="Back to Work" onClick="redirect('#close')"></input>
+      </div>
+    </div>
+
     <div class="mainBody" id="mainBody">
       <div class="inventory" id="inventory">
         <p>Inventory thing</p>
@@ -233,9 +261,10 @@
           </div>
           <div class="break" id="break">
             <div id="counts">Word Count: <br />Paragraph Count: </div>
+            <input id="breakButton" type="button" value="Take a Break!" onClick="redirect('#breakModal')"></input>
             <div id="stardiv" align="right">
               <img id="star" src="star.png">
-              <span> x 3 </span>
+              <span> x <span name="numStars">3</span> </span>
             </div>
           </div>
         </div>
