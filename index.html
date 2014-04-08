@@ -2,7 +2,9 @@
 <html>
 
   <head>
-    <script src="jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
     <script>
     function redirect(string){
       window.location = string;
@@ -70,13 +72,19 @@
         $(textDoc).css("font-size", form.size.value + "px");
       }
 
+      
       if (!setup)
       {
         setup = true;
+        docExists = true;
         var init = document.getElementById("initButton");
         $(init).attr("type", "hidden");
         var change = document.getElementById("changeButton");
         $(change).attr("type", "button");
+      }
+
+      if (docExists)
+      {
         var cancel = document.getElementById("cancelButton");
         $(cancel).attr("type", "button");
       }
@@ -85,12 +93,29 @@
       return false;
     }
 
+    function cancel(){
+      if (docExists)
+      {
+        redirect('#menuModal');
+      }
+      else if (!setup)
+      {
+        redirect('#startModal');
+      }
+    }
+
     function showAbout(){
       window.location = "#aboutModal";
       return false;
     }
 
     var setup = false;
+    var docExists = false;
+
+    function newDoc(){
+      setup = false;
+      redirect('#settingsModal');
+    }
 
     $(document).ready(function(){
       redirect('#startModal');
@@ -99,7 +124,8 @@
     });
     </script>
 
-    <link rel ="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel ="stylesheet" type="text/css" href="css/stylesheet.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     
   </head>
   <body>
@@ -126,6 +152,16 @@
           If you have any questions, comments, or suggestions, we would love to hear them! Email your feedback to vickili@umich.edu, or let one of us know through any (preferably non-magical) methods otherwise.
         </p>
         <input type="button" value="Return" onClick="redirect('#startModal')"></input>
+      </div>
+    </div>
+
+    <div id="menuModal" class="modalDialog">
+      <div align="center">
+          <h2> Menu </h2>
+          <input type="button" id="createButton" value="Create New Document" onClick="newDoc()"></input><br>
+          <input type="button" id="saveButton" value="Save Document" onClick=""></input><br>
+          <input type="button" id="loadButton" value="Load Document" onClick=""></input><br>
+          <input type="button" id="returnButton" value="Return" onClick="redirect('#close')"></input><br>
       </div>
     </div>
 
@@ -170,7 +206,7 @@
             <option value="Pages">Pages</option>
           </select><br><br>
           <input id="changeButton" type="hidden" value="Save Changes" onClick="changeSettings(this.form)"></input>
-          <input id="cancelButton" type="hidden" value="Cancel" onClick="redirect('#close')"></input>
+          <input id="cancelButton" type="hidden" value="Cancel" onClick="cancel()"></input>
           <input id="initButton" type="button" value="Create Document" onClick="changeSettings(this.form)"></input>
         </form>
         <br>
@@ -184,28 +220,25 @@
         <div id="AvatarStats">Mark Stackerman<br/>
           Level 17<br/>
           342/500 XP<br>
-          <span id="counts">Word Count: <br />Paragraph Count: </span>
         </div>
       </div>
       <div class="rightHalf" id="rightHalf">
-        <div class="headerBar" id="headerBar">
-          <button id="createButton" class="headerButton" type="button">Create</button>
-          <button id="saveButton" class="headerButton" type="button">Save</button>
-          <button id="loadButton" class="headerButton" type="button">Load</button>
-          <button id="resetButton" class="headerButton" type="button">Reset</button>
-          <a id="settingsOpen" href="#settingsModal">Settings</a>
-        </div>
         <div class="middleSection" id="middleSection">
           <div class="textEditor" id="textEditor">
-            <h1 id="documentTitle"></h1>
+            <input type="button" id="settingsOpen" value="Settings" onClick="redirect('#menuModal')"></input>
+            <div class="hero-unit" id="documentTitle"></div>
             <textarea id="textEditorTextArea" placeholder="Start typing here!"></textarea>
           </div>
           <div class="break" id="break">
-            <div id="breakStar"><img src="star.png">x3</div>
+            <div id="counts">Word Count: <br />Paragraph Count: </div>
+            <div id="stardiv" align="right">
+              <img id="star" src="star.png">
+              <span> x 3 </span>
+            </div>
           </div>
         </div>
-        <div class="notifications" id="notifications"></div>
-
+        <div class="notifications" id="notifications">
+        </div>
       </div>
 
     </div>

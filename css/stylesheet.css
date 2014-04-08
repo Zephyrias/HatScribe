@@ -40,30 +40,21 @@ width:44%;
 height:100%;
 position:absolute;
 left:56%;
-top:0px;
-}
-#headerBar
-{
-background-color:grey;
-width:75%;
-height:10%;
-position:absolute;
-left:0px;
-top:0px;
+top:0%;
 }
 #middleSection
 {
 width:75%;
-height:90%;
+height:100%;
 position:absolute;
 left:0px;
-top:10%;
+top:0px;
 }
 #textEditor
 {
 background-color:white;
 width:100%;
-height:88%;
+height:100%;
 position:absolute;
 left:0px;
 top:0px;
@@ -77,15 +68,37 @@ position:absolute;
 left:0px;
 top:88%;
 }
-#breakStar
+#stardiv
 {
 	width: 50%;
 	height: 50%;
-	margin: auto;
+  position:absolute;
+  right:15px;
+  top:10px;
+}
+#star
+{
+  position:relative;
+  top:5px;
+}
+#counts
+{
+  position:absolute;
+  left:10px;
+  top:10px;
+}
+#topRightCorner
+{
+background-color:red;
+width:25%;
+height:10%;
+position:absolute;
+left:75%;
+top:0px;
 }
 #notifications
 {
-background-color:pink;
+background-color:#222;
 width:25%;
 height:100%;
 position:absolute;
@@ -124,7 +137,7 @@ pointer-events: none;
 }
 .modalDialog > div
 {
-  width:400px;
+  width:500px;
   position: relative;
   margin:10% auto;
   padding: 5px 20px 13px 20px;
@@ -137,7 +150,8 @@ pointer-events: none;
 
 #settingsOpen
 {
-  position:relative;
-  left:50%;
-  top:25%;
+  position:fixed;
+  right:10px;
+  top:10px;
+  z-index: 1;
 }
