@@ -247,6 +247,7 @@
       }
     }
 
+    var numNotifications = 0;
     function newNotification(){
       var val = Math.floor(Math.random()*3);
       if(val == 0){
@@ -261,16 +262,39 @@
     }
 
     function addNotification(type, value){
-      var image;
+      var image, message;
       if(type=="XP"){
         image="XP.png";
+        message="You got " + value + " experience, dood!";
       }
       else if(type=="Star"){
         image="StarReward.png";
+        message="You got a star, dood!";
       }
       else{
         image="Hat.png";
+        message="You got a hat, dood!";
       }
+      var div= document.createElement('div');
+      div.className = 'notificationBox';
+      var img = document.createElement('image');
+      img.className = 'notificationImage';
+      img.src = image;
+      var text = document.createElement('div');
+      text.className = 'notificationText';
+      text.innerHTML = message;
+
+      div.appendChild(img);
+      div.appendChild(text);
+
+      var noteBox = document.getElementById("notificationBoxes");
+      if(numNotifications == 5){
+        noteBox.removeChild(noteBox.childNodes[4]);
+        numNotifications = 4;
+      }
+      noteBox.insertBefore(div,noteBox.firstChild);
+      numNotifications++;
+      
     }
     
     </script>
@@ -455,26 +479,7 @@
             </button>
           </div>
           <div id="notificationBoxes">
-            <div class="notificationBox">
-              <image class="notificationImage" src="XP.png">
-              <div class="notificationText">
-                You got some experience, dood!
-              </div>
-            </div>
-            <div class="notificationBox">
-              <image class="notificationImage" src="StarReward.png">
-              <div class="notificationText">
-                You got a star, dood!
-              </div>
-            </div>
-            <div class="notificationBox">
-              <image class="notificationImage" src="Hat.png">
-              <div class="notificationText">
-                You got a hat, dood!
-              </div>
-            </div>
-            <div class="notificationBox">Hello</div>
-            <div class="notificationBox">Hello</div>
+          <button class="btn" onClick="newNotification();">New Note!</button>
           </div>
         </div>
       </div>
