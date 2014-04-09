@@ -141,6 +141,29 @@
        alert('You just gambled!');
       }
     }
+
+    function handleFileSelect(evt){
+      var files = evt.target.files;
+      var file = files[0];
+      
+      var reader = new FileReader();
+      reader.onload = readFile;
+      reader.readAsText(file);
+
+      function readFile(){
+       var words = reader.result;
+       document.getElementById("textEditorTextArea").value = words;
+       redirect("#close");
+      }
+
+    }
+    
+    $(function(){
+      document.getElementById('loadFile').addEventListener('change',handleFileSelect,false);
+      document.getElementById('loadButton').addEventListener('change',handleFileSelect,false);
+    });
+
+
       
     </script>
 
@@ -155,7 +178,7 @@
           <h1> Welcome to Hat Scribe </h1>
           <input type="button" value="Create New Document" onClick="redirect('#settingsModal')"></input>
           <br>
-          <input type="button" value="Load Existing Document" onClick="redirect('#close')"></input>
+          <input type="file" id="loadFile" value="Load Existing Document" accept=".txt"></input>
           <br>
           <input type="button" value="About Hat Scribe" onClick="redirect('#aboutModal')"></input>
           <br>
@@ -180,7 +203,7 @@
           <h2> Menu </h2>
           <input type="button" id="createButton" value="Create New Document" onClick="newDoc()"></input><br>
           <input type="button" id="saveButton" value="Save Document" onClick=""></input><br>
-          <input type="button" id="loadButton" value="Load Document" onClick=""></input><br>
+          <input type="file" id="loadButton" value="Load Document" accept=".txt"></input><br>
           <input type="button" id="returnButton" value="Return" onClick="redirect('#close')"></input><br>
       </div>
     </div>
