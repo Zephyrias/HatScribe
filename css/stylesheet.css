@@ -287,3 +287,11 @@ pointer-events: none;
   height:30%;
   width:50%;
 }
+
+#newNote
+{
+  position: fixed;
+  bottom:30px;
+  right:10px;
+  width:18%;
+}
