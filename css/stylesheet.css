@@ -9,7 +9,6 @@ background-color:red;
 }
 #inventory
 {
-background-color:blue;
 width:56%;
 height:100%;
 position:absolute;
@@ -19,7 +18,6 @@ top:0px;
 #offInventory
 {
 position:absolute;
-background-color:red;
 width:79.3%;
 height:100%;
 left:0;
@@ -28,18 +26,20 @@ top:0;
 #inventoryBox
 {
 position:absolute;
-background-color:yellow;
+background-color:#ddd;
 width:80%;
-height:50%;
+height:40%;
 left:10%;
 top:10%;
 overflow:auto;
+display:inline-block;
+text-align: center;
 }
 .inventoryRow
 {
 position:relative;
 width:95%;
-height:20%;
+height:38%;
 margin-top:2.5%;
 margin-bottom:2.5%;
 margin-left:2.5%;
@@ -48,7 +48,7 @@ margin-right:2.5%;
 .inventoryBox
 {
 position:relative;
-background-color:grey;
+background-color:blue;
 height:100%;
 width:15%;
 margin-left:2.5%;
@@ -57,11 +57,18 @@ float:left;
 }
 #inventoryButton
 {
+background-color:#ddd;
+color:#666;
 width:15%;
 height:10%;
 position:absolute;
 right:3%;
 bottom:5%;
+}
+#pagesDiv
+{
+position:relative;
+bottom: 0px;
 }
 #AvatarStats
 {
@@ -74,7 +81,7 @@ text-align:center;
 }
 #rightHalf
 {
-background-color:green;
+background-color:white;
 width:44%;
 height:100%;
 position:absolute;
@@ -100,7 +107,7 @@ top:0px;
 }
 #break
 {
-background-color:grey;
+background-color:#eee;
 width:100%;
 height:12%;
 position:absolute;
@@ -113,18 +120,18 @@ top:88%;
 	height: 50%;
   position:absolute;
   right:15px;
-  top:10px;
+  top:15px;
 }
 #star
 {
   position:relative;
-  top:5px;
+  top:-3px;
 }
 #counts
 {
   position:absolute;
   left:10px;
-  top:10px;
+  top:6px;
 }
 #breakButton
 {
@@ -133,6 +140,7 @@ top:88%;
   top:12.5%;
   width:40%;
   height:75%;
+  z-index: 1;
 }
 #topRightCorner
 {
@@ -145,21 +153,33 @@ top:0px;
 }
 #notifications
 {
-background-color:#222;
 width:25%;
 height:100%;
 position:absolute;
 left:75%;
 top:0%;
 }
+#documentSection
+{
+  margin-top:-10px;
+}
 #textEditorTextArea
 {
+position:absolute;
+top:125px;
+left:10%;
+bottom:12%;
 display:block;
-width:100%;
+width:80%;
+border: none;
+overflow: auto;
+outline: none;
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
 -webkit-box-sizing:border-box;
 -moz-box-sizing:border-box;
 box-sizing:border-box;
-height:100%;
 resize:none;
 }
 
@@ -170,6 +190,8 @@ top:0;
 right:0;
 bottom:0;
 left:0;
+height:100%;
+width:100%;
 background:rgba(0,0,0,0.8);
 z-index: 99999;
 opacity:0;
@@ -196,12 +218,19 @@ pointer-events: none;
   background: -o-linear-gradient(#fff,#999);
 }
 
-#settingsOpen
+#settingsDiv
 {
   position:fixed;
   right:10px;
-  top:10px;
+  top:-30px;
+  width:18%;
   z-index: 1;
+}
+
+#settingsOpen
+{
+  background-color:#666;
+  color:#ddd;
 }
 
 #closeButton
@@ -210,6 +239,11 @@ pointer-events: none;
   left:25%;
   height:30%;
   width:50%;
+}
+
+#gameBlock
+{
+  height:300px;
 }
 
 #gambleButton

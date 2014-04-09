@@ -4,26 +4,51 @@
   <head>
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.file-input.js"></script>
     
     <script>
     var numStars = 3;
+    var docStart = true;
+    var questType = "Words";
+    var questNum = 0;
 
     function redirect(string){
       window.location = string;
+      if ($(string).css("display") == "none")
+        $(string).show();
+    }
+
+    function clickItem(string){
+      $(string).click();
     }
 
     $(function(){
+      $("#settingsModal input").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            changeSettings(this.form)
+        }
+      });
+    })
+
+    $(function(){
       $("#inventoryButton").click(function(){
-        var divClass = $("#inventoryButton").attr("class");
-	if(divClass == 'open'){
-          $("#mainBody").animate({left:'0%'});
-          $("#inventoryButton").attr('class','notOpen');
-          document.getElementById("inventoryButton").innerHTML = 'Close Inventory';
+        var divClass = $("#leftArrow").css("display");
+	      if(divClass == "none"){
+          $("#mainBody").animate({left:'0%'}, function(){
+            $('#leftArrow').show();
+            $("#rightArrow").css('display', "none");
+          });
+          $("#settingsDiv").css('display', "none");
+          document.getElementById("inventoryText").innerHTML = 'Close Inventory';
         }
         else{
-          $("#mainBody").animate({left:'-80%'});
-          $("#inventoryButton").attr('class','open');
-          document.getElementById("inventoryButton").innerHTML = 'Open Inventory';
+          $("#mainBody").animate({left:'-80%'}, function(){
+            $("#settingsDiv").show();
+            $("#leftArrow").css('display', "none");  
+            $("#rightArrow").show();
+          });       
+          document.getElementById("inventoryText").innerHTML = 'Open Inventory';
         }
       });
      });
@@ -40,15 +65,32 @@
         if (newlinesWithText) {
             paragraphCount = newlinesWithText.length;
           }
-        $('#counts').html('Word Count: ' + wordCount + '<br />Paragraph Count: ' + paragraphCount);
+
+        var statement = "<strong>Goal: </strong>" + questNum + " " + questType + "<br /> <strong>Progress: </strong>";
+        var countType;
+        if (questType == "Words")
+        {
+          countType = wordCount;
+        }
+        else if (questType == "Paragraphs")
+        {
+          countType = paragraphCount;
+        }
+        else if (questType == "Pages")
+        {
+          countType = 0;
+        }
+
+        statement = statement + countType + " " + questType;
+        if (countType == 1)
+          statement = statement.substring(0, statement.length - 1);
+        $('#counts').html(statement);
       });
     });
 
     function changeSettings(form){
       console.log("Document Title: " + form.docName.value);
-      console.log("Font Type: " + form.font.value);
-      console.log("Font Color: " + form.color.value);
-      console.log("Font Size: " + form.size.value);
+      console.log("Document Author: " + form.docAuthor.value);
       console.log("Paper Length Goal: " + form.lengthNum.value + " " + form.lengthType.value);
 
       if (form.docName.value != "")
@@ -59,38 +101,24 @@
       {
         document.getElementById("documentTitle").innerHTML = "Untitled";
       }
-      
-      var textDoc = document.getElementById("textEditorTextArea");
-      if (form.font.value != null)
+
+      if (form.docAuthor.value != "")
       {
-        $(textDoc).css("font-family", form.font.value);
+        $("#documentBy").show();
+        document.getElementById("documentAuthor").innerHTML = form.docAuthor.value;
       }
 
-      if (form.color.value != null)
+      if (form.lengthNum.value != "")
       {
-        $(textDoc).css("color", form.color.value);
+        questType = form.lengthType.value;
+        questNum = form.lengthNum.value;
       }
 
-      if (form.size.value!= null)
-      {
-        $(textDoc).css("font-size", form.size.value + "px");
-      }
+      $("#textEditorTextArea").css("top", $('#documentSection').css("height"));
 
-      
-      if (!setup)
+      if (docStart)
       {
-        setup = true;
-        docExists = true;
-        var init = document.getElementById("initButton");
-        $(init).attr("type", "hidden");
-        var change = document.getElementById("changeButton");
-        $(change).attr("type", "button");
-      }
-
-      if (docExists)
-      {
-        var cancel = document.getElementById("cancelButton");
-        $(cancel).attr("type", "button");
+        docStart = false;
       }
 
       redirect('#close');
@@ -98,11 +126,11 @@
     }
 
     function cancel(){
-      if (docExists)
+      if (!docStart)
       {
         redirect('#menuModal');
       }
-      else if (!setup)
+      else
       {
         redirect('#startModal');
       }
@@ -113,32 +141,48 @@
       return false;
     }
 
-    var setup = false;
-    var docExists = false;
-
     function newDoc(){
-      setup = false;
+      document.getElementById("settingsTitle").innerHTML = "New Document";
+      $('#initButton').attr("type", "button");
+      $('#cancelButton').attr("type", "button");
+      $('#changeButton').attr("type", "hidden");
+      $("#docName").val("");
+      $("#docAuthor").val("");
+      $("#lengthNum").val("");
+      $("#lengthType").val("Words");
+      redirect('#settingsModal');
+    }
+
+    function oldDoc(){
+      document.getElementById("settingsTitle").innerHTML = "Edit Document Settings";
+      $('#initButton').attr("type", "hidden");
+      $('#changeButton').attr("type", "button");
+      $('#cancelButton').attr("type", "button");
+      $("#docName").val(document.getElementById("documentTitle").innerHTML);
+      $("#docAuthor").val(document.getElementById("documentAuthor").innerHTML);
+      $("#lengthNum").val(questNum);
+      $("#lengthType").val(questType);
       redirect('#settingsModal');
     }
 
     $(document).ready(function(){
       redirect('#startModal');
       window.title = "Hat Scribe";
-      var setup = false;
     });
 
     function gamble(){
-      if(numStars == 0){
-       alert('Not enough stars!');
+      numStars = numStars - 1;
+      var tempArray = document.getElementsByName('numStars');
+      for(var i = 0; i < tempArray.length;i++)
+      {
+        tempArray[i].innerHTML = numStars;
       }
-      else{
-       numStars = numStars - 1;
-       var tempArray = document.getElementsByName('numStars');
-       for(var i = 0; i < tempArray.length;i++)
-       {
-         tempArray[i].innerHTML = numStars;
-       }
-       alert('You just gambled!');
+      alert('You just gambled!');
+
+      if (numStars <= 0)
+      {
+        $("#gambleButton").attr("disabled", true);
+        $("#breakButton").attr("disabled", true);
       }
     }
 
@@ -155,16 +199,53 @@
        document.getElementById("textEditorTextArea").value = words;
        redirect("#close");
       }
-
     }
-    
+
     $(function(){
       document.getElementById('loadFile').addEventListener('change',handleFileSelect,false);
       document.getElementById('loadButton').addEventListener('change',handleFileSelect,false);
+
+      $('input[type=file]').bootstrapFileInput();
+      $('.file-inputs').bootstrapFileInput();
     });
 
 
-      
+    var currentPage = 1;
+    function changePage(input)
+    {
+      $('#page' + currentPage).removeClass("active");
+      if (input == "+1")
+      {
+        currentPage = parseInt(currentPage) + parseInt(1);
+      }
+      else if (input == "-1")
+      {
+        currentPage = parseInt(currentPage) - parseInt(1);
+      }
+      else
+      {
+        currentPage = input;
+      }
+
+      $('#page' + currentPage).addClass("active");
+      console.log("Trying to toggle page " + currentPage);
+      if (currentPage == 1)
+      {
+        $('#pageLeft').addClass("disabled");
+        $('#pageRight').removeClass("disabled");
+      }
+      else if (currentPage == 5)
+      {
+        $('#pageRight').addClass("disabled");
+        $('#pageLeft').removeClass("disabled");
+      }
+      else
+      {
+        $('#pageLeft').removeClass("disabled");
+        $('#pageRight').removeClass("disabled");
+      }
+    }
+    
     </script>
 
     <link rel ="stylesheet" type="text/css" href="css/stylesheet.css">
@@ -175,99 +256,102 @@
     <div id="startModal" class="modalDialog">
       <div>
         <form name="setup" id="setup" align="center">
-          <h1> Welcome to Hat Scribe </h1>
-          <input type="button" value="Create New Document" onClick="redirect('#settingsModal')"></input>
+          <div class="page-header">
+            <h1> Welcome to Hat Scribe </h1>
+          </div>
+          <input type="button" class="btn btn-block btn-default" value="Create New Document" onClick="redirect('#settingsModal')"></input>
           <br>
-          <input type="file" id="loadFile" value="Load Existing Document" accept=".txt"></input>
+          <input type="button" class="btn btn-block btn-default" value="Load Document" onClick="clickItem('#loadFile')"></input>
+          <div style="display:none">
+            <input type="file" id="loadFile" accept=".txt"></input>
+          </div>
           <br>
-          <input type="button" value="About Hat Scribe" onClick="redirect('#aboutModal')"></input>
-          <br>
+          <input type="button" class="btn btn-block btn-default" value="About Hat Scribe" onClick="redirect('#aboutModal')"></input>
         </form>
         <br>
       </div>
     </div>
 
-    <div id="aboutModal" class="modalDialog">
+    <div id="aboutModal" class="modalDialog" style="display:none">
       <div>
-        <h2> About Hat Scribe </h2>
+        <div class="page-header">
+          <h2> About Hat Scribe </h2>
+        </div>
         <p> Hat Scribe is an interactive drafting tool intended to motivate users to write more by gamifying the writing process. This tool was designed by Team Mad Milliners for EECS 493, the User Interface class at the University of Michigan. <br><br>
           Our team consists of Vicki Li, Daniel Nees, and John Rabideau (with some initial help from Emily Stearns). All of us are computer science majors at the Engineering School here in Ann Arbor and qualified nerds/geeks.<br><br>
           If you have any questions, comments, or suggestions, we would love to hear them! Email your feedback to vickili@umich.edu, or let one of us know through any (preferably non-magical) methods otherwise.
         </p>
-        <input type="button" value="Return" onClick="redirect('#startModal')"></input>
+        <br>
+        <input type="button" class="btn btn-block btn-default" value="Return" onClick="redirect('#startModal')"></input>
       </div>
     </div>
 
-    <div id="menuModal" class="modalDialog">
+    <div id="menuModal" class="modalDialog" style="display:none">
       <div align="center">
-          <h2> Menu </h2>
-          <input type="button" id="createButton" value="Create New Document" onClick="newDoc()"></input><br>
-          <input type="button" id="saveButton" value="Save Document" onClick=""></input><br>
-          <input type="file" id="loadButton" value="Load Document" accept=".txt"></input><br>
-          <input type="button" id="returnButton" value="Return" onClick="redirect('#close')"></input><br>
+          <div class="page-header">
+            <h2> Menu </h2>
+          </div>
+          <input type="button" class="btn btn-block btn-default" id="createButton" value="Edit Document Settings" onClick="oldDoc()"></input><br>
+          <input type="button" class="btn btn-block btn-default" id="createButton" value="Create New Document" onClick="newDoc()"></input><br>
+          <input type="button" class="btn btn-block btn-default" id="saveButton" value="Save Document" onClick=""></input><br>
+          <input type="button" class="btn btn-block btn-default" value="Load Document" onClick="clickItem('#loadButton')"></input>
+          <div style="display:none">
+            <input type="file" id="loadButton" accept=".txt"></input>
+          </div>
+          <br>
+          <input type="button" class="btn btn-block btn-default" id="returnButton" value="Return" onClick="redirect('#close')"></input><br>
       </div>
     </div>
 
-    <div id="settingsModal" class="modalDialog">
+    <div id="settingsModal" class="modalDialog" style="display:none">
       <div>
         <form name="settings" id="settings">
-          <h2> Document Settings </h2>
-          Document Title: <input type="text" name="docName" placeholder="Untitled"><br><br>
-          Font Type:
-          <select name="font">
-            <option value="Arial">Arial</option>
-            <option value="Comic Sans">Comic Sans</option>
-            <option value="Times New Roman">Times New Roman</option>
-          </select><br><br>
-          Font Color:
-          <select name="color">
-            <option value="Black">Black</option>
-            <option value="Blue" style="color:blue">Blue</option>
-            <option value="Green" style="color:green">Green</option>
-            <option value="Red" style="color:red">Red</option>
-          </select><br><br>
-          Font Size:
-          <select name="size">
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12" selected>12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>            
-          </select><br><br>
-          Paper Length Goal: <input type="text" name="lengthNum" maxlength="5" size="5">
-          <select name="lengthType">
-            <option value="Words" selected>Words</option>
-            <option value="Paragraphs">Paragraphs</option>
-            <option value="Pages">Pages</option>
-          </select><br><br>
-          <input id="changeButton" type="hidden" value="Save Changes" onClick="changeSettings(this.form)"></input>
-          <input id="cancelButton" type="hidden" value="Cancel" onClick="cancel()"></input>
-          <input id="initButton" type="button" value="Create Document" onClick="changeSettings(this.form)"></input>
+          <div class="page-header">
+            <h2 id="settingsTitle"> New Document </h2>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Title: </span> 
+            <input type="text" class="form-control" id="docName" placeholder="Untitled" autofocus>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Author: </span> 
+            <input type="text" class="form-control" id="docAuthor" placeholder="Batman">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Paper Length Goal: </span>
+            <input type="text" class="form-control" id="lengthNum" maxlength="5" size="5">
+              <select id="lengthType" class="form-control">
+                <option value="Words">Words</option>
+                <option value="Paragraphs">Paragraphs</option>
+                <option value="Pages">Pages</option>
+              </select>
+            </select>
+          </div>
+          <br>
+          <input id="initButton" class="btn btn-block btn-primary" type="button" value="Create Document" onClick="changeSettings(this.form)"></input>
+          <input id="changeButton" class="btn btn-block btn-primary" type="hidden" value="Save Changes" onClick="changeSettings(this.form)"></input>
+          <input id="cancelButton" class="btn btn-block btn-default" type="button" value="Cancel" onClick="cancel()"></input>
         </form>
         <br>
       </div>
     </div>
 
-    <div id="breakModal" class="modalDialog">
+    <div id="breakModal" class="modalDialog" style="display:none">
       <div>
-        Here's where the break stuff goes. NumStars: <span name="numStars">3</span>
+        <div class="text-center">
+          <img id="star" src="star.png">
+          x <span name="numStars">3</span>
+        </div>
+        <div class="well" id="gameBlock">
+        </div>
         <br>
-        <input id="gambleButton" type="button" value="Use a Star" onClick="gamble()"></input>
-        <br>
-        <input id="closeButton" type="button" value="Back to Work" onClick="redirect('#close')"></input>
+        <input id="gambleButton" class="btn btn-block btn-primary" type="button" value="Use a Star" onClick="gamble()"></input>
+        <input id="closeButton" class="btn btn-block btn-default" type="button" value="Back to Work" onClick="redirect('#close')"></input>
       </div>
     </div>
 
     <div class="mainBody" id="mainBody">
-      <div class="inventory" id="inventory">
+      <div class="inventory bg-primary" id="inventory">
         <div class="offInventory" id="offInventory">
           <div id="inventoryBox">
             <div class="inventoryRow">
@@ -284,59 +368,65 @@
              <div class="inventoryBox">Item 9</div>
              <div class="inventoryBox">Item 10</div>
             </div>
-            <div class="inventoryRow">
-             <div class="inventoryBox">Item 11</div>
-             <div class="inventoryBox">Item 12</div>
-             <div class="inventoryBox">Item 13</div>
-             <div class="inventoryBox">Item 14</div>
-             <div class="inventoryBox">Item 15</div>
-            </div>
-            <div class="inventoryRow">
-             <div class="inventoryBox">Item 16</div>
-             <div class="inventoryBox">Item 17</div>
-             <div class="inventoryBox">Item 18</div>
-             <div class="inventoryBox">Item 19</div>
-             <div class="inventoryBox">Item 20</div>
-            </div>
-            <div class="inventoryRow">
-             <div class="inventoryBox">Item 21</div>
-             <div class="inventoryBox">Item 22</div>
-             <div class="inventoryBox">Item 23</div>
-             <div class="inventoryBox">Item 24</div>
-             <div class="inventoryBox">Item 25</div>
-            </div>
-            <div class="inventoryRow">
-             <div class="inventoryBox">Item 26</div>
-             <div class="inventoryBox">Item 27</div>
-             <div class="inventoryBox">Item 28</div>
-             <div class="inventoryBox">Item 29</div>
-             <div class="inventoryBox">Item 30</div>
-            </div>
+          </div>
+          <div class="text-center">
+            <ul id="pagesDiv" class="pagination">
+              <li id="pageLeft" class="disabled"><a onClick="changePage('-1')">&laquo;</a></li>
+              <li id="page1" class="active"><a onClick="changePage('1')">1<span class="sr-only">(current)</span></a></li>
+              <li id="page2"><a onClick="changePage('2')">2</a></li>
+              <li id="page3"><a onClick="changePage('3')">3</a></li> 
+              <li id="page4"><a onClick="changePage('4')">4</a></li> 
+              <li id="page5"><a onClick="changePage('5')">5</a></li>                              
+              <li id="pageRight"><a onClick="changePage('+1')">&raquo;</a></li>
+            </ul>
           </div>
         </div>
-        <button class="open" id="inventoryButton" type="button">Open Inventory</button>
-        <div id="AvatarStats">Mark Stackerman<br/>
-          Level 17<br/>
-          342/500 XP<br>
+        <button class="btn btn-block" id="inventoryButton" type="button">
+          <span class="glyphicon glyphicon-arrow-right" id="rightArrow"></span>
+          <span class="glyphicon glyphicon-arrow-left" id="leftArrow" style="display:none"></span>
+          <strong id="inventoryText">Open Inventory</strong>
+        </button>
+        <div id="AvatarStats">
+          <span class="lead">Mark Stackerman</span>
+          <small>Level 17</small>
+          <br><br>
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="500" style="width:58.67%; height:20px">
+            342/500 XP
+            </div>
+          </div>
         </div>
       </div>
       <div class="rightHalf" id="rightHalf">
         <div class="middleSection" id="middleSection">
           <div class="textEditor" id="textEditor">
-            <input type="button" id="settingsOpen" value="Settings" onClick="redirect('#menuModal')"></input>
-            <div class="hero-unit" id="documentTitle"></div>
-            <textarea id="textEditorTextArea" placeholder="Start typing here!"></textarea>
+            <div id="settingsDiv" class="page-header">
+              <button class="btn btn-block" id="settingsOpen" onClick="redirect('#menuModal')">
+                  <span class="glyphicon glyphicon-cog"></span>
+                  Settings
+              </button>
+            </div>
+            <div class="jumbotron text-center" id="documentSection">
+              <h3 id="documentTitle"></h3>
+              <small id="documentBy" style="display:none">by </small>
+              <small id="documentAuthor"></small>
+            </div>
+            <textarea id="textEditorTextArea" class="form-control" placeholder="Start typing here!"></textarea>
           </div>
           <div class="break" id="break">
-            <div id="counts">Word Count: <br />Paragraph Count: </div>
-            <input id="breakButton" type="button" value="Take a Break!" onClick="redirect('#breakModal')"></input>
+            <div id="counts"></div>
+            <button id="breakButton" class="btn btn-danger" onClick="redirect('#breakModal')">
+              <span class="glyphicon glyphicon-star"></span>
+              Take a Break!
+              <span class="glyphicon glyphicon-star"></span>
+            </button>
             <div id="stardiv" align="right">
               <img id="star" src="star.png">
               <span> x <span name="numStars">3</span> </span>
             </div>
           </div>
         </div>
-        <div class="notifications" id="notifications">
+        <div class="notifications bg-info" id="notifications">
         </div>
       </div>
 
