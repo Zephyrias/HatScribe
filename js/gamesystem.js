@@ -28,11 +28,13 @@ $(function(){
         $("#rightArrow").hide();
       });
       $("#settingsDiv").hide();
+      $("#newNote").hide();
       document.getElementById("inventoryText").innerHTML = "Close Inventory";
     }
     else{
       $("#mainBody").animate({left:'-80%'}, function(){
         $("#settingsDiv").show();
+        $("#newNote").show();
         $("#leftArrow").hide();
         $("#rightArrow").show();
       });       
@@ -122,7 +124,7 @@ function addNotification(type, value){
   }
   var div= document.createElement('div');
   div.className = 'notificationBox';
-  var img = document.createElement('image');
+  var img = document.createElement('img');
   img.className = 'notificationImage';
   img.src = "images/" + image;
   var text = document.createElement('div');
