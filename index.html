@@ -2,307 +2,23 @@
 <html>
 
   <head>
+    <!--Script calls for JQuery and Bootstrap files-->
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.file-input.js"></script>
-    
-    <script>
-    var numStars = 3;
-    var docStart = true;
-    var questType = "Words";
-    var questNum = 0;
 
-    function redirect(string){
-      window.location = string;
-      if ($(string).css("display") == "none")
-        $(string).show();
-    }
+    <!--Script calls for our personal JS files-->
+    <script src="js/main.js"></script>
+    <script src="js/document.js"></script>
+    <script src="js/gamesystem.js"></script>
+    <script src="js/breakgame.js"></script>
 
-    function clickItem(string){
-      $(string).click();
-    }
-
-    $(function(){
-      $("#settingsModal input").keydown(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            changeSettings(this.form)
-        }
-      });
-    })
-
-    $(function(){
-      $("#inventoryButton").click(function(){
-        var divClass = $("#leftArrow").css("display");
-	      if(divClass == "none"){
-          $("#mainBody").animate({left:'0%'}, function(){
-            $('#leftArrow').show();
-            $("#rightArrow").css('display', "none");
-          });
-          $("#settingsDiv").css('display', "none");
-          document.getElementById("inventoryText").innerHTML = 'Close Inventory';
-        }
-        else{
-          $("#mainBody").animate({left:'-80%'}, function(){
-            $("#settingsDiv").show();
-            $("#leftArrow").css('display', "none");  
-            $("#rightArrow").show();
-          });       
-          document.getElementById("inventoryText").innerHTML = 'Open Inventory';
-        }
-      });
-     });
-
-    $(function(){
-      $('#textEditorTextArea').keyup(function(){
-        var wordCount = 0;
-        var paragraphCount = 0;
-        var startsAndFinishes = $('#'+this.id).val().match(/\b/g);
-        var newlinesWithText = $('#'+this.id).val().match(/(\n.)|(^.)/g);
-        if (startsAndFinishes) {
-          wordCount = startsAndFinishes.length / 2;
-        }
-        if (newlinesWithText) {
-            paragraphCount = newlinesWithText.length;
-          }
-
-        var statement = "<strong>Goal: </strong>" + questNum + " " + questType + "<br /> <strong>Progress: </strong>";
-        var countType;
-        if (questType == "Words")
-        {
-          countType = wordCount;
-        }
-        else if (questType == "Paragraphs")
-        {
-          countType = paragraphCount;
-        }
-        else if (questType == "Pages")
-        {
-          countType = 0;
-        }
-
-        statement = statement + countType + " " + questType;
-        if (countType == 1)
-          statement = statement.substring(0, statement.length - 1);
-        $('#counts').html(statement);
-      });
-    });
-
-    function changeSettings(form){
-      console.log("Document Title: " + form.docName.value);
-      console.log("Document Author: " + form.docAuthor.value);
-      console.log("Paper Length Goal: " + form.lengthNum.value + " " + form.lengthType.value);
-
-      if (form.docName.value != "")
-      {
-        document.getElementById("documentTitle").innerHTML = form.docName.value;
-      }
-      else
-      {
-        document.getElementById("documentTitle").innerHTML = "Untitled";
-      }
-
-      if (form.docAuthor.value != "")
-      {
-        $("#documentBy").show();
-        document.getElementById("documentAuthor").innerHTML = form.docAuthor.value;
-      }
-
-      if (form.lengthNum.value != "")
-      {
-        questType = form.lengthType.value;
-        questNum = form.lengthNum.value;
-      }
-
-      $("#textEditorTextArea").css("top", $('#documentSection').css("height"));
-
-      if (docStart)
-      {
-        docStart = false;
-      }
-
-      redirect('#close');
-      return false;
-    }
-
-    function cancel(){
-      if (!docStart)
-      {
-        redirect('#menuModal');
-      }
-      else
-      {
-        redirect('#startModal');
-      }
-    }
-
-    function showAbout(){
-      window.location = "#aboutModal";
-      return false;
-    }
-
-    function newDoc(){
-      document.getElementById("settingsTitle").innerHTML = "New Document";
-      $('#initButton').attr("type", "button");
-      $('#cancelButton').attr("type", "button");
-      $('#changeButton').attr("type", "hidden");
-      $("#docName").val("");
-      $("#docAuthor").val("");
-      $("#lengthNum").val("");
-      $("#lengthType").val("Words");
-      document.getElementById("textEditorTextArea").value="";
-      redirect('#settingsModal');
-    }
-
-    function oldDoc(){
-      document.getElementById("settingsTitle").innerHTML = "Edit Document Settings";
-      $('#initButton').attr("type", "hidden");
-      $('#changeButton').attr("type", "button");
-      $('#cancelButton').attr("type", "button");
-      $("#docName").val(document.getElementById("documentTitle").innerHTML);
-      $("#docAuthor").val(document.getElementById("documentAuthor").innerHTML);
-      $("#lengthNum").val(questNum);
-      $("#lengthType").val(questType);
-      redirect('#settingsModal');
-    }
-
-    $(document).ready(function(){
-      redirect('#startModal');
-      window.title = "Hat Scribe";
-    });
-
-    function gamble(){
-      numStars = numStars - 1;
-      var tempArray = document.getElementsByName('numStars');
-      for(var i = 0; i < tempArray.length;i++)
-      {
-        tempArray[i].innerHTML = numStars;
-      }
-      alert('You just gambled!');
-
-      if (numStars <= 0)
-      {
-        $("#gambleButton").attr("disabled", true);
-        $("#breakButton").attr("disabled", true);
-      }
-    }
-
-    function handleFileSelect(evt){
-      var files = evt.target.files;
-      var file = files[0];
-      
-      var reader = new FileReader();
-      reader.onload = readFile;
-      reader.readAsText(file);
-
-      function readFile(){
-       var words = reader.result;
-       document.getElementById("textEditorTextArea").value = words;
-       redirect("#close");
-      }
-    }
-
-    $(function(){
-      document.getElementById('loadFile').addEventListener('change',handleFileSelect,false);
-      document.getElementById('loadButton').addEventListener('change',handleFileSelect,false);
-
-      $('input[type=file]').bootstrapFileInput();
-      $('.file-inputs').bootstrapFileInput();
-    });
-
-
-    var currentPage = 1;
-    function changePage(input)
-    {
-      $('#page' + currentPage).removeClass("active");
-      if (input == "+1")
-      {
-        currentPage = parseInt(currentPage) + parseInt(1);
-      }
-      else if (input == "-1")
-      {
-        currentPage = parseInt(currentPage) - parseInt(1);
-      }
-      else
-      {
-        currentPage = input;
-      }
-
-      $('#page' + currentPage).addClass("active");
-      console.log("Trying to toggle page " + currentPage);
-      if (currentPage == 1)
-      {
-        $('#pageLeft').addClass("disabled");
-        $('#pageRight').removeClass("disabled");
-      }
-      else if (currentPage == 5)
-      {
-        $('#pageRight').addClass("disabled");
-        $('#pageLeft').removeClass("disabled");
-      }
-      else
-      {
-        $('#pageLeft').removeClass("disabled");
-        $('#pageRight').removeClass("disabled");
-      }
-    }
-
-    var numNotifications = 0;
-    function newNotification(){
-      var val = Math.floor(Math.random()*3);
-      if(val == 0){
-        addNotification("XP", Math.floor(Math.random()*1000));
-      }
-      else if(val == 1){
-        addNotification("Star", 0);
-      }
-      else{
-        addNotification("Hat", 0);
-      }
-    }
-
-    function addNotification(type, value){
-      var image, message;
-      if(type=="XP"){
-        image="XP.png";
-        message="You got " + value + " experience, dood!";
-      }
-      else if(type=="Star"){
-        image="StarReward.png";
-        message="You got a star, dood!";
-      }
-      else{
-        image="Hat.png";
-        message="You got a hat, dood!";
-      }
-      var div= document.createElement('div');
-      div.className = 'notificationBox';
-      var img = document.createElement('image');
-      img.className = 'notificationImage';
-      img.src = image;
-      var text = document.createElement('div');
-      text.className = 'notificationText';
-      text.innerHTML = message;
-
-      div.appendChild(img);
-      div.appendChild(text);
-
-      var noteBox = document.getElementById("notificationBoxes");
-      if(numNotifications == 5){
-        noteBox.removeChild(noteBox.childNodes[4]);
-        numNotifications = 4;
-      }
-      noteBox.insertBefore(div,noteBox.firstChild);
-      numNotifications++;
-      
-    }
-    
-    </script>
-
+    <!--Links our personal CSS file and the bootstrap classes to our project-->
     <link rel ="stylesheet" type="text/css" href="css/stylesheet.css">
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    
   </head>
+
+  
   <body>
     <div id="startModal" class="modalDialog">
       <div>
@@ -390,7 +106,7 @@
     <div id="breakModal" class="modalDialog" style="display:none">
       <div>
         <div class="text-center">
-          <img id="star" src="star.png">
+          <img id="star" src="images/star.png">
           x <span name="numStars">3</span>
         </div>
         <div class="well" id="gameBlock">
@@ -459,14 +175,17 @@
             <textarea id="textEditorTextArea" class="form-control" placeholder="Start typing here!"></textarea>
           </div>
           <div class="break" id="break">
-            <div id="counts"></div>
+            <div id="countsDiv">
+              <div id="goal"></div>
+              <div id="counts"></div>
+            </div>
             <button id="breakButton" class="btn btn-danger" onClick="redirect('#breakModal')">
               <span class="glyphicon glyphicon-star"></span>
               Take a Break!
               <span class="glyphicon glyphicon-star"></span>
             </button>
             <div id="stardiv" align="right">
-              <img id="star" src="star.png">
+              <img id="star" src="images/star.png">
               <span> x <span name="numStars">3</span> </span>
             </div>
           </div>
