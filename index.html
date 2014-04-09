@@ -246,6 +246,32 @@
         $('#pageRight').removeClass("disabled");
       }
     }
+
+    function newNotification(){
+      var val = Math.floor(Math.random()*3);
+      if(val == 0){
+        addNotification("XP", Math.floor(Math.random()*1000));
+      }
+      else if(val == 1){
+        addNotification("Star", 0);
+      }
+      else{
+        addNotification("Hat", 0);
+      }
+    }
+
+    function addNotification(type, value){
+      var image;
+      if(type=="XP"){
+        image="XP.png";
+      }
+      else if(type=="Star"){
+        image="StarReward.png";
+      }
+      else{
+        image="Hat.png";
+      }
+    }
     
     </script>
 
@@ -401,12 +427,6 @@
       <div class="rightHalf" id="rightHalf">
         <div class="middleSection" id="middleSection">
           <div class="textEditor" id="textEditor">
-            <div id="settingsDiv" class="page-header">
-              <button class="btn btn-block" id="settingsOpen" onClick="redirect('#menuModal')">
-                  <span class="glyphicon glyphicon-cog"></span>
-                  Settings
-              </button>
-            </div>
             <div class="jumbotron text-center" id="documentSection">
               <h3 id="documentTitle"></h3>
               <small id="documentBy" style="display:none">by </small>
@@ -428,6 +448,34 @@
           </div>
         </div>
         <div class="notifications bg-info" id="notifications">
+          <div id="settingsDiv" class="page-header">
+            <button class="btn btn-block" id="settingsOpen" onClick="redirect('#menuModal')">
+                <span class="glyphicon glyphicon-cog"></span>
+                Settings
+            </button>
+          </div>
+          <div id="notificationBoxes">
+            <div class="notificationBox">
+              <image class="notificationImage" src="XP.png">
+              <div class="notificationText">
+                You got some experience, dood!
+              </div>
+            </div>
+            <div class="notificationBox">
+              <image class="notificationImage" src="StarReward.png">
+              <div class="notificationText">
+                You got a star, dood!
+              </div>
+            </div>
+            <div class="notificationBox">
+              <image class="notificationImage" src="Hat.png">
+              <div class="notificationText">
+                You got a hat, dood!
+              </div>
+            </div>
+            <div class="notificationBox">Hello</div>
+            <div class="notificationBox">Hello</div>
+          </div>
         </div>
       </div>
 
