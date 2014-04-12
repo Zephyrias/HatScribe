@@ -155,11 +155,12 @@
         </button>
         <div id="AvatarStats">
           <span class="lead">Mark Stackerman</span>
-          <small>Level 17</small>
+          <small>Level <span id="level">1</span></small>
           <br><br>
           <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="500" style="width:58.67%; height:20px">
-            342/500 XP
+
+            <div id="progbar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="500" style="width:0%; height:20px">
+              <span style="color:black"><span id="curExp">0</span>/<span id="maxExp">10</span>XP</span>
             </div>
           </div>
         </div>

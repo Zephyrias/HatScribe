@@ -13,6 +13,15 @@ var currentPage = 1;
 // Used to count the current number of notifications
 var numNotifications = 0;
 
+//Used to keep track of current level
+var curLevel = 1
+
+//Used to keep track of current exp
+var curExp = 0
+
+//Used to keep track of exp until next level
+var maxExp = 10
+
 //-------------------------------------------------------------
 // Event Binding
 //-------------------------------------------------------------
@@ -118,9 +127,13 @@ function addNotification(type, value){
     image="StarReward.png";
     message="You got a star, dood!";
   }
-  else{
+  else if(type=="Hat"){
     image="Hat.png";
     message="You got a hat, dood!";
+  }
+  else{
+    image="Level.png";
+    message="You reached level " + value + ", dood!";
   }
   var div= document.createElement('div');
   div.className = 'notificationBox';
@@ -143,3 +156,29 @@ function addNotification(type, value){
   numNotifications++;
 }
 
+//
+//EXP Related
+//
+
+function updateBars(){
+  $("#level").text(curLevel);
+  $("#curExp").text(curExp);
+  $("#maxExp").text(maxExp);
+  $("#progbar").css("width", 100*curExp/maxExp + "%");
+}
+
+function addExp(amount){
+  while(amount > 0){
+    curExp = curExp + 1;
+    amount = amount - 1;
+    if(curExp == maxExp){
+      curLevel = curLevel + 1;
+      curExp = 0;
+      //Do some sorta function here
+      maxExp = 10;
+      addNotification("Level",curLevel);
+    }
+    updateBars();
+  }
+}
+  

@@ -14,6 +14,9 @@ var docStart = true;
 var questType = "Words";
 var questNum = 0;
 
+// This stores the maximum number of "questType" typed so far
+var maxCount = 0;
+
 //-------------------------------------------------------------
 // Event Binding
 //-------------------------------------------------------------
@@ -74,6 +77,21 @@ $(function(){
     if (countType == 1)
       statement = statement.substring(0, statement.length - 1);
     $('#counts').html(statement);
+
+    if(maxCount < countType){
+      if(questType == "Words"){
+        addExp(countType - maxCount);
+      }
+      else if (questType == "Paragraphs"){
+        //This will need tweaking. 100 words/para
+        addExp(100*(countType - maxCount));
+      }
+      else{
+        //Also tweaking. 400 words/page
+        addExp(400*(countType - maxCount));
+      }
+      maxCount = countType;
+    }
   });
 });
 
