@@ -131,9 +131,13 @@ function addNotification(type, value){
     image="Hat.png";
     message="You got a hat, dood!";
   }
-  else{
+  else if(type=="Level"){
     image="Level.png";
     message="You reached level " + value + ", dood!";
+  }
+  else{
+    image="Quest.png";
+    message="You just finished this document, dood!";
   }
   var div= document.createElement('div');
   div.className = 'notificationBox';

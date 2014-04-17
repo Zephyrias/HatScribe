@@ -17,6 +17,9 @@ var questNum = 0;
 // This stores the maximum number of "questType" typed so far
 var maxCount = 0;
 
+// This stores whether or not the document is completed
+var docFinished = false;
+
 //-------------------------------------------------------------
 // Event Binding
 //-------------------------------------------------------------
@@ -53,7 +56,11 @@ $(function(){
       wordCount = startsAndFinishes.length / 2;
     }
     if (newlinesWithText) {
-        paragraphCount = newlinesWithText.length;
+        //-1 to make it finished paragraphs
+        paragraphCount = newlinesWithText.length - 1;
+        if(paragraphCount < 0){
+          paragrpahCount = 0;
+        }
       }
 
     var statement = "<strong>Goal: </strong>" + questNum + " " + questType;
@@ -78,6 +85,20 @@ $(function(){
       statement = statement.substring(0, statement.length - 1);
     $('#counts').html(statement);
 
+    if(docFinished == false & countType >= questNum){
+      addNotification("Quest",0);
+      if(questType == "Words"){
+        addExp(questNum);
+      }
+      else if(questType == "Paragraphs"){
+        addExp(100*questNum);
+      }
+      else{
+        addExp(400*questNum);
+      }
+      docFinished = true;
+    }
+
     if(maxCount < countType){
       if(questType == "Words"){
         addExp(countType - maxCount);
@@ -99,6 +120,10 @@ $(function(){
 //-------------------------------------------------------------
 // Helper Functions
 //-------------------------------------------------------------
+function counter(){
+
+}
+
 function changeSettings(form){
 	// This takes the form values from the document settings page
 	// and sets the appropriate elements in the document to match
@@ -173,6 +198,8 @@ function newDoc(){
   $("#lengthNum").val("");
   $("#lengthType").val("Words");
   document.getElementById("textEditorTextArea").value="";
+  docFinished = false;
+  maxCount = 0;
   redirect('#settingsModal');
 }
 
@@ -212,6 +239,8 @@ function handleFileSelect(evt){
   function readFile(){
    var words = reader.result;
    document.getElementById("textEditorTextArea").value = words;
+   docFinished = false;
+   maxCount = 0;
    redirect("#close");
   }
 }
