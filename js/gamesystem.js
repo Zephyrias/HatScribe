@@ -20,7 +20,7 @@ var curLevel = 1
 var curExp = 0
 
 //Used to keep track of exp until next level
-var maxExp = 10
+var maxExp = 50
 
 //-------------------------------------------------------------
 // Event Binding
@@ -179,7 +179,7 @@ function addExp(amount){
       curLevel = curLevel + 1;
       curExp = 0;
       //Do some sorta function here
-      maxExp = 10;
+      maxExp = curLevel*curLevel + 50*curLevel - 1;
       addNotification("Level",curLevel);
     }
     updateBars();
