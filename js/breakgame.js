@@ -10,6 +10,8 @@
 // Keeps track of how many stars you have.
 var numStars = 3;
 
+// Is true if the user is currently in a result notification
+var inResults = false;
 
 //-------------------------------------------------------------
 // Helper Functions
@@ -18,26 +20,40 @@ var numStars = 3;
 function gamble(){
 	// Decrements stars and disables the appropriate buttons
 	// when you run out of stars
+  if(inResults == true){
+    return;
+  }
+
   numStars = numStars - 1;
 
-  var hatPer = 25;
-  var expPer = 25;
-  var starPer = 25;
+  var hatPer = 30;
+  var expPer = 30;
+  var starPer = 15;
   var losePer = 25;
   var result = Math.floor(Math.random()*100);
   if(result < hatPer){
     //Drop a hat
     addNotification("Hat",0);
+    $("#rewardTxt").text("You won a hat!");
+    $("#rewardImg").css("display","block");
+    inResults = true;
   }
   else if(result < hatPer + expPer){
     //Give Exp
     //Maybe a proper amount of EXP as well
     addNotification("XP",curLevel*100);
+    $("#rewardTxt").text("You got " + curLevel*100 + " exp!");
+    $("#rewardImg").css("display","block");
+    inResults = true;
     addExp(curLevel*100);
+    
   }
   else if(result < hatPer + expPer + starPer){
     //Give a star
-    numStars = numStars + 1;
+    numStars = numStars + 2;
+    $("#rewardTxt").text("You got 2 stars!");
+    $("#rewardImg").css("display","block");
+    inResults = true;
     //Maybe a notification?
   }
   else{
@@ -56,3 +72,20 @@ function gamble(){
     $("#breakButton").attr("disabled", true);
   }
 }
+
+function hideResult(){
+  alert('Hi');
+  if(inResults == true){
+    $("#rewardImg").css("display","none");
+    inResults = false;
+  }
+}
+
+$(document).ready(function(){
+  $("#rewardImg").on("click", function(){
+    if(inResults == true){
+      $("#rewardImg").css("display","none");
+      inResults = false;
+    }
+  });
+});

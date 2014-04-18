@@ -279,6 +279,26 @@ pointer-events: none;
 {
   height:300px;
 }
+#rewardImg
+{
+  position:absolute;
+  height:260px;
+  width:420px;
+  display:none;
+}
+#rewardImg > img
+{
+  position:absolute;
+  height:100%;
+  width:100%;
+}
+#rewardImg > p
+{
+  position:absolute;
+  top:45%;
+  left:25%;
+  z-index:9999;
+}
 
 #gambleButton
 {
