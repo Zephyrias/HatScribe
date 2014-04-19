@@ -1,0 +1,36 @@
+body
+{
+  background-image:url('background.png');
+  background-color:#FFFFA3;
+  padding-left:80px;
+}
+h1
+{
+  padding-top:27px;
+}
+h3
+{
+  margin-top:-6px;
+  padding-bottom: 4px;
+}
+h3.br
+{
+  padding-bottom:23px;
+  margin-top: 0px;
+}
+h2
+{
+  margin-top:-10px;
+}
+p
+{
+  line-height:40px;
+  margin-top: -10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+p.br
+{
+  padding-top:50px;
+  margin-top:0px;
+}
