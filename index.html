@@ -5,7 +5,8 @@
     <!--Script calls for JQuery and Bootstrap files-->
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap.file-input.js"></script>
+    <script src="js/bootstrap.file-input.js"></script>    
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script> 
 
     <!--Script calls for our personal JS files-->
     <script src="js/main.js"></script>
@@ -16,6 +17,7 @@
     <!--Links our personal CSS file and the bootstrap classes to our project-->
     <link rel ="stylesheet" type="text/css" href="css/stylesheet.css">
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" media="screen">
   </head>
 
   
@@ -122,22 +124,7 @@
     <div class="mainBody" id="mainBody">
       <div class="inventory bg-primary" id="inventory">
         <div class="offInventory" id="offInventory">
-          <div id="inventoryBox">
-            <div class="inventoryRow">
-             <div class="inventoryBox">Item 1</div>
-             <div class="inventoryBox">Item 2</div>
-             <div class="inventoryBox">Item 3</div>
-             <div class="inventoryBox">Item 4</div>
-             <div class="inventoryBox">Item 5</div>
-            </div>
-            <div class="inventoryRow">
-             <div class="inventoryBox">Item 6</div>
-             <div class="inventoryBox">Item 7</div>
-             <div class="inventoryBox">Item 8</div>
-             <div class="inventoryBox">Item 9</div>
-             <div class="inventoryBox">Item 10</div>
-            </div>
-          </div>
+        <!--
           <div class="text-center">
             <ul id="pagesDiv" class="pagination">
               <li id="pageLeft" class="disabled"><a onClick="changePage('-1')">&laquo;</a></li>
@@ -148,6 +135,27 @@
               <li id="page5"><a onClick="changePage('5')">5</a></li>                              
               <li id="pageRight"><a onClick="changePage('+1')">&raquo;</a></li>
             </ul>
+          </div>
+        -->
+          <div id="topDiv">
+            <div class="page-header">
+              <h2 id="inventoryTitle"> 
+                Inventory 
+                <small id="inventorySize"> Hats: 0 </small>
+              </h2>
+            </div>
+            <div id="topInventory" class="row">
+            </div >
+          </div>
+          <div id="bottomDiv">
+            <div class="page-header">
+              <h2 id="equippedTitle"> 
+                Equipped Hats               
+                <small id="hatLimit"> Limit: 1 </small>
+              </h2>
+            </div>
+            <div id="bottomInventory" class="row droppable">
+            </div>
           </div>
         </div>
         <button class="btn btn-block" id="inventoryButton" type="button">

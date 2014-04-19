@@ -86,7 +86,8 @@ $(function(){
     $('#counts').html(statement);
 
     if(docFinished == false & countType >= questNum){
-      addNotification("Quest",0);
+      if (questNum != 0)
+        addNotification("Quest",0);
       if(questType == "Words"){
         addExp(questNum);
       }
@@ -131,8 +132,7 @@ $(document).delegate('#textEditorTextArea', 'keydown', function(e) {
                 + $(this).val().substring(end));
 
     // put caret at right position again
-    $(this).get(0).selectionStart =
-    $(this).get(0).selectionEnd = start + 1;
+    $(this).get(0).selectionStart = $(this).get(0).selectionEnd = start + 1;
   }
 });
 

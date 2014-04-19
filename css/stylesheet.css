@@ -23,37 +23,64 @@ height:100%;
 left:0;
 top:0;
 }
-#inventoryBox
+#inventoryTitle
 {
-position:absolute;
-background-color:#ddd;
-width:80%;
-height:40%;
-left:10%;
-top:10%;
-overflow:auto;
-display:inline-block;
-text-align: center;
+  position:relative;
+  left:30px;
 }
-.inventoryRow
+#equippedTitle
 {
-position:relative;
-width:95%;
-height:38%;
-margin-top:2.5%;
-margin-bottom:2.5%;
-margin-left:2.5%;
-margin-right:2.5%;
+  position:relative;
+  left:30px;
 }
-.inventoryBox
+#topDiv
 {
-position:relative;
-background-color:blue;
-height:100%;
-width:15%;
-margin-left:2.5%;
-margin-right:2.5%;
-float:left;
+  position:absolute;
+  top:5%;
+  width: 90%;
+}
+#bottomDiv
+{
+  position:absolute;
+  top:60%;
+  width: 90%;
+}
+.draggable:hover {
+  background: grey;
+}
+#topInventory
+{
+  position: relative;
+  left: 50px;
+  width: 97%;
+  height: 300px;
+  margin: 0; 
+  padding: 0; 
+  list-style-type: none; 
+  overflow: auto;
+  z-index: 0;
+}
+#bottomInventory
+{
+  position: relative;
+  left: 50px;
+  width: 97%;
+  height: 200px;
+  margin: 0;
+  padding: 0; 
+  list-style-type: none; 
+  overflow: auto;
+  z-index: 0;
+}
+.itemList 
+{ 
+  float: left;
+  margin: 3px 5px 3px 5px; 
+  padding: 2px; 
+  width: 100px; 
+  height: 100px; 
+  font-size: 4em; 
+  text-align: center;
 }
 #inventoryButton
 {
@@ -181,7 +208,6 @@ background: -o-linear-gradient(#999,#ccc);
 position:absolute;
 width:30%;
 height:50%;
-background-color:blue;
 top:25%;
 left:10%;
 }

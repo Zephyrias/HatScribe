@@ -22,6 +22,9 @@ var curExp = 0
 //Used to keep track of exp until next level
 var maxExp = 50
 
+var hatLimit = 1;
+var hatCount = 0; // Start with 0 hats :<
+
 //-------------------------------------------------------------
 // Event Binding
 //-------------------------------------------------------------
@@ -52,6 +55,62 @@ $(function(){
   });
  });
 
+$(function() {  
+  $("#topInventory img").draggable({
+    appendTo: "body",
+    helper: "clone"
+  });
+
+  var counter = 0;
+  var removeIntent = false;
+  var grabbingExisting = false;
+  $(".droppable").droppable({
+    activeClass: "ui-state-default",
+    hoverClass: "ui-state-hover",
+    placeholder: "ui-state-placeholder",
+    over: function(event, ui){
+      if (counter == hatLimit && !grabbingExisting)
+        $(ui.helper).css("background", "red");
+        $(ui.helper).css("opacity", 0.6);
+    },
+    accept: ":not(.ui-sortable-helper)",
+    drop: function(event, ui){
+      $(this).find(".placeholder").remove();
+      if (counter != hatLimit && !grabbingExisting)
+      {
+        var img = document.createElement('img');
+        img.src = ui.draggable[0].src;
+        img.className = "itemList";
+        $(this).append(img);
+        counter = counter + 1;
+      }
+    }
+  }).sortable({
+    items: "img:not(.placeholder)",
+    over: function() {
+      removeIntent = false;
+      grabbingExisting = true;
+    },
+    out: function () {
+      removeIntent = true;
+      grabbingExisting = false;
+    },
+    beforeStop: function (event, ui) {
+      if(removeIntent)
+      {
+        ui.item.remove();
+        counter = counter - 1;
+      }
+    },
+    sort: function() {
+      grid:[100,100],
+      $(this).removeClass("ui-state-default");
+    },
+    helper: "clone",
+    appendTo: "body",
+    zIndex: 10000
+  }); 
+}); 
 
 //-------------------------------------------------------------
 // Helper Functions
@@ -128,10 +187,17 @@ function addNotification(type, value){
     message="You got a star, dood!";
   }
   else if(type=="Hat"){
-    image="Hat.png";
+    val = Math.floor(Math.random()*20);
+    if (val == 0)
+      val = 1;
+    image="hats/" + val + ".png";
     message="You got a hat, dood!";
+    addHat(image);
   }
   else if(type=="Level"){
+    hatLimit = hatLimit + 1;
+    var statement = "Limit: " + hatLimit;
+    $('#hatLimit').html(statement);
     image="Level.png";
     message="You reached level " + value + ", dood!";
   }
@@ -172,7 +238,6 @@ function updateBars(){
 }
 
 function addExp(amount){
-  console.log("Adding " + amount);
   while(amount > 0){
     curExp = curExp + 1;
     amount = amount - 1;
@@ -187,3 +252,16 @@ function addExp(amount){
   }
 }
   
+function addHat(image){
+  var li = document.createElement('img');
+  li.src = 'images/' + image;
+  li.className = 'draggable itemList';
+  $('#topInventory').append(li);
+  $("#topInventory img").draggable({
+    appendTo: "body",
+    helper: "clone"
+  });
+  hatCount = hatCount + 1;
+  var statement = "Hats: " + hatCount;
+  $('#inventorySize').html(statement);
+}
