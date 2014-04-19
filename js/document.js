@@ -116,6 +116,26 @@ $(function(){
   });
 });
 
+// Allows the user to use tab in their documents.
+$(document).delegate('#textEditorTextArea', 'keydown', function(e) {
+  var keyCode = e.keyCode || e.which;
+
+  if (keyCode == 9) {
+    e.preventDefault();
+    var start = $(this).get(0).selectionStart;
+    var end = $(this).get(0).selectionEnd;
+
+    // set textarea value to: text before caret + tab + text after caret
+    $(this).val($(this).val().substring(0, start)
+                + "\t"
+                + $(this).val().substring(end));
+
+    // put caret at right position again
+    $(this).get(0).selectionStart =
+    $(this).get(0).selectionEnd = start + 1;
+  }
+});
+
 
 //-------------------------------------------------------------
 // Helper Functions
@@ -131,6 +151,17 @@ function changeSettings(form){
 	// This also resizes the top of the textarea to match the
 	// size of the "jumbotron" (document title area) in case
 	// the title is multiple lines.
+  
+  // First see if the form is valid
+  var f = document.getElementById("settings");
+  if(f.checkValidity()) {
+  } else {
+    // This clicks a hidden form to show the form validation messages
+    document.getElementById("submitForm").click();
+    return false;
+  }
+
+
   if (form.docName.value != "")
   {
     document.getElementById("documentTitle").innerHTML = form.docName.value;

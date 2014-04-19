@@ -86,7 +86,7 @@
           </div>
           <div class="input-group">
             <span class="input-group-addon">Paper Length Goal: </span>
-            <input type="text" class="form-control" id="lengthNum" maxlength="5" size="5">
+            <input type="number" class="form-control" id="lengthNum" maxlength="5" size="5" min="0">
               <select id="lengthType" class="form-control">
                 <option value="Words">Words</option>
                 <option value="Paragraphs">Paragraphs</option>
@@ -94,6 +94,7 @@
               </select>
             </select>
           </div>
+          <input type="submit" id="submitForm" style="opacity:0">
           <br>
           <input id="initButton" class="btn btn-block btn-primary" type="button" value="Create Document" onClick="changeSettings(this.form)"></input>
           <input id="changeButton" class="btn btn-block btn-primary" type="hidden" value="Save Changes" onClick="changeSettings(this.form)"></input>

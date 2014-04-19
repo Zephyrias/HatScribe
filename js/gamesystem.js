@@ -172,6 +172,7 @@ function updateBars(){
 }
 
 function addExp(amount){
+  console.log("Adding " + amount);
   while(amount > 0){
     curExp = curExp + 1;
     amount = amount - 1;

@@ -9,7 +9,6 @@
 $(document).ready(function(){
   // Changes the window and document title to Hat Scribe, 
   // opens the startModal once everything loads
-  console.log("am I here?");
   redirect('#startModal');
   window.title = "Hat Scribe";
   document.title = "Hat Scribe";
@@ -25,6 +24,9 @@ function redirect(string){
   window.location = string;
   if ($(string).css("display") == "none")
     $(string).show();
+
+  if (string == "#close")
+    document.getElementById("textEditorTextArea").focus();
 }
 
 function clickItem(string){
