@@ -25,6 +25,9 @@ var maxExp = 50
 var hatLimit = 1;
 var hatCount = 0; // Start with 0 hats :<
 
+//The current number of hat images
+var NUMHATS = 20;
+
 //-------------------------------------------------------------
 // Event Binding
 //-------------------------------------------------------------
@@ -191,9 +194,14 @@ function addNotification(type, value){
     {
       tempArray[i].innerHTML = numStars;
     }
+    if(numStars > 0){
+      $("#gambleButton").attr("disabled", false);
+      $("#breakButton").attr("disabled", false);
+    }
   }
   else if(type=="Hat"){
-    val = Math.floor(Math.random()*20);
+    //The +1 is because the hat files are from 1-20
+    val = Math.floor(Math.random()*NUMHATS + 1);
     if (val == 0)
       val = 1;
     image="hats/" + val + ".png";

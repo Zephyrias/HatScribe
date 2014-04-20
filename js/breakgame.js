@@ -56,7 +56,6 @@ function gamble(){
     $("#rewardImg").css("display","block");
     inResults = true;
     addNotification("Star",2);
-    //Maybe a notification?
   }
   else{
     //Nothing happens!
