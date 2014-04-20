@@ -100,19 +100,19 @@ $(function(){
       docFinished = true;
     }
 
-    if(maxCount < countType){
-      if(questType == "Words"){
-        addExp(countType - maxCount);
+    if(maxCount < wordCount){
+      addExp(countType - maxCount);
+      maxCount = wordCount;
+      //1% chance to drop a star
+      var rand = Math.floor(Math.random()*100);
+      if(rand == 0){
+        addNotification("Hat",0);
       }
-      else if (questType == "Paragraphs"){
-        //This will need tweaking. 100 words/para
-        addExp(100*(countType - maxCount));
+      //1% chance to drop a hat
+      rand = Math.floor(Math.random()*100);
+      if(rand == 0){
+        addNotification("Star",1);
       }
-      else{
-        //Also tweaking. 400 words/page
-        addExp(400*(countType - maxCount));
-      }
-      maxCount = countType;
     }
   });
 });

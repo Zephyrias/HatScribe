@@ -41,19 +41,21 @@ function gamble(){
   else if(result < hatPer + expPer){
     //Give Exp
     //Maybe a proper amount of EXP as well
-    addNotification("XP",curLevel*100);
-    $("#rewardTxt").text("You got " + curLevel*100 + " exp!");
+    var amount = Math.floor((curLevel*curLevel + 50*curLevel - 1)/10);
+    addNotification("XP",amount);
+    $("#rewardTxt").text("You got " + amount + " exp!");
     $("#rewardImg").css("display","block");
     inResults = true;
-    addExp(curLevel*100);
+    addExp(amount);
     
   }
   else if(result < hatPer + expPer + starPer){
     //Give a star
-    numStars = numStars + 2;
+    //numStars = numStars + 2;
     $("#rewardTxt").text("You got 2 stars!");
     $("#rewardImg").css("display","block");
     inResults = true;
+    addNotification("Star",2);
     //Maybe a notification?
   }
   else{

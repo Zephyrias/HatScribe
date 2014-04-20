@@ -185,6 +185,12 @@ function addNotification(type, value){
   else if(type=="Star"){
     image="StarReward.png";
     message="You got a star, dood!";
+    numStars = numStars + value;
+    var tempArray = document.getElementsByName('numStars');
+    for(var i = 0; i < tempArray.length;i++)
+    {
+      tempArray[i].innerHTML = numStars;
+    }
   }
   else if(type=="Hat"){
     val = Math.floor(Math.random()*20);
