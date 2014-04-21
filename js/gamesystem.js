@@ -26,7 +26,7 @@ var hatLimit = 1;
 var hatCount = 0; // Start with 0 hats :<
 
 //The current number of hat images
-var NUMHATS = 20;
+var NUMHATS = 16;
 
 //-------------------------------------------------------------
 // Event Binding

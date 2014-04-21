@@ -341,3 +341,75 @@ pointer-events: none;
   right:10px;
   width:18%;
 }
+.avatarArea
+{
+  position:absolute;
+  height:615%;
+  width:100%;
+  bottom:-675%;
+}
+.hatArea
+{
+  position:absolute;
+  height:100%;
+  width:100px;
+  left:20%;
+  bottom:105px;
+}
+
+.avatar
+{
+  position:absolute;
+  bottom: 0;
+  left: 25%;
+  height: 174px;
+  width: 98px;
+  z-index: 10;
+}
+.hat
+{
+  position:absolute;
+  height: 100px;
+  width: 100px;
+  left:0;
+}
+#hat7
+{
+  bottom:56%;
+  z-index:18;
+}
+#hat6
+{
+  bottom:48%;
+  z-index:17;
+}
+#hat5
+{
+  bottom:40%;
+  z-index:16;
+}
+#hat4
+{
+  bottom:32%;
+  z-index:15;
+}
+#hat3
+{
+  bottom:24%;
+  z-index:14;
+}
+#hat2
+{
+  bottom:16%;
+  z-index:13;
+}
+#hat1
+{
+  bottom:8%;
+  z-index:12;
+}
+#hat0
+{
+  bottom:0%;
+  z-index:11;
+}
