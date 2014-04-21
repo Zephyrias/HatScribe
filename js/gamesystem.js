@@ -28,6 +28,9 @@ var hatCount = 0; // Start with 0 hats :<
 //The current number of hat images
 var NUMHATS = 16;
 
+//The max number of hats to be stacked
+var maxHats = 8;
+
 //-------------------------------------------------------------
 // Event Binding
 //-------------------------------------------------------------
@@ -86,6 +89,17 @@ $(function() {
         img.className = "itemList";
         $(this).append(img);
         counter = counter + 1;
+        var looper = 0;
+        var list = document.getElementById("bottomInventory").childNodes;
+        while(looper < counter){
+          var img = list.item(looper+1).src;
+          $("#hat" + looper).attr("src",img).css("display","block");
+          looper = looper + 1;
+        }
+        while(looper < maxHats){
+          $("#hat" + looper).css("display","none");
+          looper=looper+1;
+        }
       }
     }
   }).sortable({
@@ -103,11 +117,26 @@ $(function() {
       {
         ui.item.remove();
         counter = counter - 1;
+
       }
+    },
+    stop: function (event, ui) {
+        var looper = 0;
+        var list = document.getElementById("bottomInventory").childNodes;
+        while(looper < counter){
+          var img = list.item(looper+1).src;
+          $("#hat" + looper).attr("src",img).css("display","block");
+          looper = looper + 1;
+        }
+        while(looper < maxHats){
+          $("#hat" + looper).css("display","none");
+          looper=looper+1;
+        }
     },
     sort: function() {
       grid:[100,100],
       $(this).removeClass("ui-state-default");
+
     },
     helper: "clone",
     appendTo: "body",
@@ -161,6 +190,7 @@ function changePage(input)
 }
 
 
+
 // 
 // Notification related
 //
@@ -209,7 +239,9 @@ function addNotification(type, value){
     addHat(image);
   }
   else if(type=="Level"){
-    hatLimit = hatLimit + 1;
+    if(hatLimit < maxHats){
+      hatLimit = hatLimit + 1;
+    }
     var statement = "Limit: " + hatLimit;
     $('#hatLimit').html(statement);
     image="Level.png";

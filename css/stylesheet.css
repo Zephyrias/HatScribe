@@ -375,41 +375,49 @@ pointer-events: none;
 }
 #hat7
 {
+  display:none;
   bottom:56%;
   z-index:18;
 }
 #hat6
 {
+  display:none;
   bottom:48%;
   z-index:17;
 }
 #hat5
 {
+  display:none;
   bottom:40%;
   z-index:16;
 }
 #hat4
 {
+  display:none;
   bottom:32%;
   z-index:15;
 }
 #hat3
 {
+  display:none;
   bottom:24%;
   z-index:14;
 }
 #hat2
 {
+  display:none;
   bottom:16%;
   z-index:13;
 }
 #hat1
 {
+  display:none;
   bottom:8%;
   z-index:12;
 }
 #hat0
 {
+  display:none;
   bottom:0%;
   z-index:11;
 }
