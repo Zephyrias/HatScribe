@@ -62,7 +62,7 @@
           </div>
           <input type="button" class="btn btn-block btn-default" id="createButton" value="Edit Document Settings" onClick="oldDoc()"></input><br>
           <input type="button" class="btn btn-block btn-default" id="createButton" value="Create New Document" onClick="newDoc()"></input><br>
-          <input type="button" class="btn btn-block btn-default" id="saveButton" value="Save Document" onClick=""></input><br>
+          <input type="button" class="btn btn-block btn-default" id="saveButton" value="Save Document" onClick="" disabled></input><br>
           <input type="button" class="btn btn-block btn-default" value="Load Document" onClick="clickItem('#loadButton')"></input>
           <div style="display:none">
             <input type="file" id="loadButton" accept=".txt"></input>
@@ -110,7 +110,7 @@
       <div>
         <div class="text-center">
           <img id="star" src="images/star.png">
-          x <span name="numStars">3</span>
+          x <span name="numStars">0</span>
         </div>
         <div class="well" id="gameBlock">
           <div id="rewardImg"><img src="images/Prize.png"><p id="rewardTxt">Hello! Here is more text</p></div>
@@ -203,14 +203,14 @@
               <div id="goal"></div>
               <div id="counts"></div>
             </div>
-            <button id="breakButton" class="btn btn-danger" onClick="redirect('#breakModal')">
+            <button id="breakButton" class="btn btn-danger" onClick="redirect('#breakModal')" disabled>
               <span class="glyphicon glyphicon-star"></span>
               Take a Break!
               <span class="glyphicon glyphicon-star"></span>
             </button>
             <div id="stardiv" align="right">
               <img id="star" src="images/star.png">
-              <span> x <span name="numStars">3</span> </span>
+              <span> x <span name="numStars">0</span> </span>
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@
             </button>
           </div>
           <div id="notificationBoxes">
-          <button id="newNote" class="btn btn-block" onClick="newNotification();">New Note!</button>
+          <!-- <button id="newNote" class="btn btn-block" onClick="newNotification();">New Note!</button> -->
           </div>
         </div>
       </div>

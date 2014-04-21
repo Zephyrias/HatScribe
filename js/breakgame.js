@@ -8,7 +8,7 @@
 //-------------------------------------------------------------
 
 // Keeps track of how many stars you have.
-var numStars = 3;
+var numStars = 0;
 
 // Is true if the user is currently in a result notification
 var inResults = false;
@@ -41,7 +41,7 @@ function gamble(){
   else if(result < hatPer + expPer){
     //Give Exp
     //Maybe a proper amount of EXP as well
-    var amount = Math.floor((curLevel*curLevel + 50*curLevel - 1)/10);
+    var amount = Math.floor((curLevel*curLevel + 50*curLevel - 1)/4);
     addNotification("XP",amount);
     $("#rewardTxt").text("You got " + amount + " exp!");
     $("#rewardImg").css("display","block");

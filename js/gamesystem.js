@@ -201,7 +201,7 @@ function newNotification(){
     addNotification("XP", Math.floor(Math.random()*1000));
   }
   else if(val == 1){
-    addNotification("Star", 0);
+    addNotification("Star", 1);
   }
   else{
     addNotification("Hat", 0);
