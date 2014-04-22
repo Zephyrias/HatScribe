@@ -34,3 +34,16 @@ p.br
   padding-top:50px;
   margin-top:0px;
 }
+img
+{
+  height:300px;
+  width:450px;
+}
+p.caption
+{
+  text-align:center;
+}
+div.image
+{
+  float:left;
+}
